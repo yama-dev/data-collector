@@ -20,13 +20,6 @@ const dataCollector = options => {
     ...options
   };
 
-  // glob('yaml/**/*', {ignore: ['**/node_modules/**/*']}, function (er, files) {
-  //   for (var i = 0, len = files.length; i < len; i++) {
-  //     let file = fs.readFileSync(files[i], { encoding: 'utf-8' });
-  //     let _data = jsyaml.load(file);
-  //   }
-  // });
-
   let files = glob.sync(`${options.data}/**/*`, {ignore: options.ignore});
 
   for (var i = 0, len = files.length; i < len; i++) {
@@ -34,7 +27,11 @@ const dataCollector = options => {
     let filedata = fs.readFileSync(filename, { encoding: 'utf-8' });
 
     let _data = null;
-    _data = jsyaml.load(filedata);
+    if(path.extname(filename) === '.yaml'){
+      _data = jsyaml.load(filedata);
+    } else if(path.extname(filename) === '.json'){
+      _data = JSON.parse(filedata);
+    }
 
     if(_data.title){
       data.all.push(_data);
