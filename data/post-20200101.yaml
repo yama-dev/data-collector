@@ -1,0 +1,21 @@
+data_type: news
+
+date: 2020-01-01 00:00:00
+published: true
+
+category: test
+tags:
+  movie: 動画
+
+title: ウェブサイトを開設しました
+
+body:
+  ウェブサイトを開設しました。<br>
+  コンテンツを公開していきます。
+
+detail: |
+  <section class="p-news">
+    <h2 class="p-news__title">
+      NEWS
+    </h2>
+  </section>
