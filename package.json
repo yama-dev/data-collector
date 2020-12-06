@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "build": "nodemon index.js"
+    "start": "npm install && npm run build",
+    "build": "nodemon index.js --exec 'npm test'",
+    "test": "mocha test"
   },
   "keywords": [],
   "author": "@yama-dev",
   "license": "MIT",
   "devDependencies": {
+    "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.6"
   },
   "dependencies": {
