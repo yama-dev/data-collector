@@ -30,7 +30,14 @@ const dataCollector = options => {
     if(path.extname(filename) === '.yaml'){
       _data = jsyaml.load(filedata);
     } else if(path.extname(filename) === '.json'){
-      _data = JSON.parse(filedata);
+      function reviveDate(key, value) {
+        if (value == null ||
+          value.constructor !== String ||
+          value.search(/^\d{4}-\d{2}-\d{2}/g) === -1)
+          return value;
+        return new Date(value);
+      }
+      _data = JSON.parse(filedata, reviveDate);
     }
 
     if(_data.title){
