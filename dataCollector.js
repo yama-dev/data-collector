@@ -29,7 +29,10 @@ const dataCollector = options => {
     ...options
   };
 
-  let files = glob.sync(`${options.data}/**/*`, {ignore: options.ignore});
+  let files = glob.sync(`${options.data}/**/*`, {
+    ignore: options.ignore,
+    nodir: true
+  });
 
   for (var i = 0, len = files.length; i < len; i++) {
     let filename = files[i];
