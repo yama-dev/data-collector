@@ -2,6 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 const jsyaml = require('js-yaml');
+const jsxml = require('fast-xml-parser');
+
+function reviveDate(key, value) {
+  if (value == null ||
+    value.constructor !== String ||
+    value.search(/^\d{4}-\d{2}-\d{2}/g) === -1)
+    return value;
+  return new Date(value);
+}
 
 const dataCollector = options => {
   let data = {
@@ -38,6 +47,14 @@ const dataCollector = options => {
         return new Date(value);
       }
       _data = JSON.parse(filedata, reviveDate);
+    } else if(path.extname(filename) === '.xml'){
+      // xml
+      let _xml = jsxml.parse(filedata);
+      if(_xml.root){
+        _data = JSON.parse(JSON.stringify(_xml.root), reviveDate);
+      } else {
+        _data = JSON.parse(JSON.stringify(_xml), reviveDate);
+      }
     }
 
     if(_data.title){
