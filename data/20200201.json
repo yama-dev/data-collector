@@ -2,11 +2,11 @@
   "data_type": "news",
   "date": "2020-02-01 00:00:00 +0000",
   "published": true,
-  "category": "test",
+  "category": "cate2",
   "tags": {
     "live": "ライブ"
   },
-  "title": "ウェブサイトを開設しました",
+  "title": "sample json",
   "body": "ウェブサイトを開設しました。<br> コンテンツを公開していきます。",
   "detail": "<section class=\"p-news\">\n  <h2 class=\"p-news__title\">\n    NEWS\n  </h2>\n</section>"
 }

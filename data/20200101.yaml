@@ -3,7 +3,7 @@ data_type: news
 date: 2020-03-01 00:00:00
 published: true
 
-category: test
+category: cate1
 tags:
   movie: 動画
 
