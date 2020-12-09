@@ -18,9 +18,9 @@ const dataCollector = options => {
   };
 
   const _options = {
-    data: 'data',
-    order: 'DESC',
-    orderby: 'date',
+    data: 'data', // Directory where data is stored.
+    order: 'DESC', // Sort. DESC or ASC
+    orderby: 'date', // Sort. property-name.
     ignore: ['**/node_modules/**/*']
   };
 
@@ -35,17 +35,12 @@ const dataCollector = options => {
     let filename = files[i];
     let filedata = fs.readFileSync(filename, { encoding: 'utf-8' });
 
-    let _data = null;
+    let _data = {};
     if(path.extname(filename) === '.yaml'){
+      // yaml
       _data = jsyaml.load(filedata);
     } else if(path.extname(filename) === '.json'){
-      function reviveDate(key, value) {
-        if (value == null ||
-          value.constructor !== String ||
-          value.search(/^\d{4}-\d{2}-\d{2}/g) === -1)
-          return value;
-        return new Date(value);
-      }
+      // json
       _data = JSON.parse(filedata, reviveDate);
     } else if(path.extname(filename) === '.xml'){
       // xml
