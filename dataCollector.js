@@ -63,18 +63,20 @@ const dataCollector = options => {
   }
 
   // Sort
-  if(options.order == 'ASC'){
-    data.all.sort(function(a,b){
-      if(a[options.orderby] < b[options.orderby]) return -1;
-      if(a[options.orderby] > b[options.orderby]) return 1;
-      return 0;
-    });
-  } else if(options.order == 'DESC'){
-    data.all.sort(function(a,b){
-      if(a[options.orderby] < b[options.orderby]) return 1;
-      if(a[options.orderby] > b[options.orderby]) return -1;
-      return 0;
-    });
+  for (let key in data) {
+    if(options.order == 'ASC'){
+      data[key].sort(function(a,b){
+        if(a[options.orderby] < b[options.orderby]) return -1;
+        if(a[options.orderby] > b[options.orderby]) return 1;
+        return 0;
+      });
+    } else if(options.order == 'DESC'){
+      data[key].sort(function(a,b){
+        if(a[options.orderby] < b[options.orderby]) return 1;
+        if(a[options.orderby] > b[options.orderby]) return -1;
+        return 0;
+      });
+    }
   }
 
   return data;
