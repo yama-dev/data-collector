@@ -20,7 +20,7 @@ const dataCollector = options => {
   const _options = {
     data: 'data', // Directory where data is stored.
     order: 'DESC', // Sort. DESC or ASC
-    orderby: 'date', // Sort. property-name.
+    orderby: 'order', // Sort. property-name.
     ignore: ['**/node_modules/**/*']
   };
 
