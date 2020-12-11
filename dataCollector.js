@@ -55,7 +55,8 @@ const dataCollector = options => {
       }
     }
 
-    if(_data.title){
+    // Only data that meets the conditions.
+    if(_data.title || _data.slug || _data.id){
       data.all.push(_data);
     }
 
