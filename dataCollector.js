@@ -68,19 +68,25 @@ const dataCollector = options => {
 
   // Sort
   for (let key in data) {
+
+    // set order property-name.
+    let _orderby = data[key][0][options.orderby] ? options.orderby : data[key][0]['date'] ? 'date' : null;
+
+    if(_orderby){
     if(options.order == 'ASC'){
       data[key].sort(function(a,b){
-        if(a[options.orderby] < b[options.orderby]) return -1;
-        if(a[options.orderby] > b[options.orderby]) return 1;
+          if(a[_orderby] < b[_orderby]) return -1;
+          if(a[_orderby] > b[_orderby]) return 1;
         return 0;
       });
     } else if(options.order == 'DESC'){
       data[key].sort(function(a,b){
-        if(a[options.orderby] < b[options.orderby]) return 1;
-        if(a[options.orderby] > b[options.orderby]) return -1;
+          if(a[_orderby] < b[_orderby]) return 1;
+          if(a[_orderby] > b[_orderby]) return -1;
         return 0;
       });
     }
+  }
   }
 
   return data;
