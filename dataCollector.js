@@ -3,6 +3,34 @@ const path = require('path');
 const glob = require('glob');
 const jsyaml = require('js-yaml');
 const jsxml = require('fast-xml-parser');
+const marked = require('marked');
+
+const renderer = {
+  html(text) {
+    return text;
+  }
+};
+marked.use({ renderer });
+
+function parseMd(str) {
+  let _return = {};
+
+  // frontmatter
+  let frontmatter = str.match(/---(\n|.)*---/);
+  if(frontmatter){
+    let frontmatterYaml = frontmatter[0].replace(/---/g,'');
+    _return = jsyaml.load(frontmatterYaml);
+  }
+
+  // body
+  let body = str.replace(/---(\n|.)*---/,'');
+  // remove space. before&after
+  body = body.replace(/^(\s*)/g,'').replace(/(\s*)$/g,'');
+
+  _return.body = marked(body);
+
+  return _return;
+}
 
 function reviveDate(key, value) {
   if (value == null ||
@@ -53,6 +81,9 @@ const dataCollector = options => {
       } else {
         _data = JSON.parse(JSON.stringify(_xml), reviveDate);
       }
+    } else if(path.extname(filename) === '.md'){
+      // markdown
+      _data = parseMd(filedata);
     }
 
     // Only data that meets the conditions.
@@ -73,20 +104,20 @@ const dataCollector = options => {
     let _orderby = data[key][0][options.orderby] ? options.orderby : data[key][0]['date'] ? 'date' : null;
 
     if(_orderby){
-    if(options.order == 'ASC'){
-      data[key].sort(function(a,b){
+      if(options.order == 'ASC'){
+        data[key].sort(function(a,b){
           if(a[_orderby] < b[_orderby]) return -1;
           if(a[_orderby] > b[_orderby]) return 1;
-        return 0;
-      });
-    } else if(options.order == 'DESC'){
-      data[key].sort(function(a,b){
+          return 0;
+        });
+      } else if(options.order == 'DESC'){
+        data[key].sort(function(a,b){
           if(a[_orderby] < b[_orderby]) return 1;
           if(a[_orderby] > b[_orderby]) return -1;
-        return 0;
-      });
+          return 0;
+        });
+      }
     }
-  }
   }
 
   return data;
