@@ -16,14 +16,14 @@ function parseMd(str) {
   let _return = {};
 
   // frontmatter
-  let frontmatter = str.match(/---(\n|.)*---/);
+  let frontmatter = str.match(/---(\n|\n\r|\r\n|.)*---/);
   if(frontmatter){
     let frontmatterYaml = frontmatter[0].replace(/---/g,'');
     _return = jsyaml.load(frontmatterYaml);
   }
 
   // body
-  let body = str.replace(/---(\n|.)*---/,'');
+  let body = str.replace(/---(\n|\n\r|\r\n|.)*---/,'');
   // remove space. before&after
   body = body.replace(/^(\s*)/g,'').replace(/(\s*)$/g,'');
 
